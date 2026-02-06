@@ -7,16 +7,16 @@
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         :root { --neon: #00f2fe; --glass: rgba(255, 255, 255, 0.04); --blur: 15px; }
-        body { margin: 0; background: #000; color: #fff; font-family: 'Segoe UI', Roboto, sans-serif; height: 100vh; overflow-y: auto; overflow-x: hidden; }
+        body { margin: 0; background: #000; color: #fff; font-family: 'Segoe UI', sans-serif; height: 100vh; overflow-y: auto; overflow-x: hidden; }
 
-        /* FIXED BACKGROUND SIGNATURE */
+        /* CHARACTER BACKGROUND */
         #bg-image {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: url('./bg.jpg') no-repeat center center/cover;
             filter: blur(15px) brightness(0.3); z-index: -1;
         }
 
-        /* NEON NAVIGATION BAR */
+        /* GLASSMOPRHISM NAVIGATION BAR */
         nav {
             position: fixed; top: 0; width: 100%; height: 65px;
             background: rgba(0,0,0,0.85); backdrop-filter: blur(20px);
@@ -24,47 +24,32 @@
             display: flex; align-items: center; justify-content: space-around;
             box-shadow: 0 5px 20px rgba(0, 242, 254, 0.15);
         }
-        nav a { color: var(--neon); text-decoration: none; font-size: 11px; font-weight: 900; letter-spacing: 1.5px; text-transform: uppercase; transition: 0.3s; }
-        nav a:active { transform: scale(0.9); text-shadow: 0 0 10px var(--neon); }
+        nav a { color: var(--neon); text-decoration: none; font-size: 11px; font-weight: 900; letter-spacing: 1.5px; text-transform: uppercase; }
 
-        /* DASHBOARD LAYOUT */
         .container { padding: 90px 15px 30px; text-align: center; max-width: 500px; margin: 0 auto; }
         
         .hub-card { 
             background: var(--glass); border: 1px solid rgba(0, 242, 254, 0.2);
             border-radius: 20px; padding: 25px; margin-bottom: 20px;
             backdrop-filter: blur(var(--blur)); box-shadow: 0 10px 40px rgba(0,0,0,0.5);
-            animation: slideIn 0.6s ease-out;
         }
 
-        @keyframes slideIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-
-        /* UNIVERSAL SEARCH ENGINE */
         .search-box {
             width: 100%; padding: 15px; background: rgba(0,0,0,0.7); border: 1px solid var(--neon);
             color: white; border-radius: 12px; margin-bottom: 15px; outline: none; font-size: 16px;
-            box-sizing: border-box; text-align: center; box-shadow: inset 0 0 10px rgba(0, 242, 254, 0.1);
+            box-sizing: border-box; text-align: center;
         }
 
         .btn { 
             background: linear-gradient(90deg, #00f2fe, #4facfe); border: none; 
             padding: 18px; width: 100%; border-radius: 12px; color: #000; font-weight: 900;
             cursor: pointer; text-transform: uppercase; letter-spacing: 2px;
-            box-shadow: 0 5px 15px rgba(0, 242, 254, 0.4); transition: 0.2s;
+            box-shadow: 0 5px 15px rgba(0, 242, 254, 0.4);
         }
-        .btn:active { transform: scale(0.98); filter: brightness(1.2); }
 
-        /* RESULTS AREA */
         #results-area { display: none; margin-top: 20px; text-align: left; }
-        .res-item { 
-            background: rgba(0, 255, 0, 0.08); border-left: 5px solid #0f0; 
-            padding: 12px; margin-bottom: 10px; border-radius: 10px; font-size: 13px;
-            animation: fadeIn 0.4s;
-        }
+        .res-item { background: rgba(0, 255, 0, 0.08); border-left: 5px solid #0f0; padding: 12px; margin-bottom: 10px; border-radius: 10px; font-size: 13px; }
 
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-
-        /* 1-SECOND PAYDAY LOADER */
         #loader {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95);
             z-index: 10000; display: none; flex-direction: column; align-items: center; justify-content: center;
@@ -75,10 +60,9 @@
 </head>
 <body>
     <div id="bg-image"></div>
-    
     <nav>
         <a href="#" onclick="location.reload()">🏠 HOME</a>
-        <a href="#" onclick="triggerPayday()">🎬 CINEMA</a>
+        <a href="#" onclick="triggerPayday()">🎬 MOVIES</a>
         <a href="#" onclick="triggerPayday()">🏮 ANIME</a>
         <a href="#" onclick="triggerPayday()">🛠 TOOLS</a>
     </nav>
@@ -87,69 +71,49 @@
         <h1 id="status-head" style="color: var(--neon); text-shadow: 0 0 20px var(--neon); font-size: 30px;">AR EMPIRE v4.0</h1>
         
         <div class="hub-card">
-            <h3 style="color: var(--neon); margin-top: 0; letter-spacing: 2px;">🔍 GLOBAL DORK ENGINE</h3>
-            <input type="text" id="search-input" class="search-box" placeholder="Search Movies, Anime, Games, APKs...">
+            <h3 style="color: var(--neon); margin-top: 0; letter-spacing: 2px;">🔍 UNIVERSAL DORK ENGINE</h3>
+            <input type="text" id="search-input" class="search-box" placeholder="Search the whole internet...">
             <button class="btn" onclick="executeSearch()">SCAN INTERNET</button>
             
             <div id="results-area">
                 <div id="results-content"></div>
-                <button class="btn" style="margin-top: 10px; background: #0f0;" onclick="triggerPayday()">📥 DOWNLOAD SECURELY</button>
+                <button class="btn" style="margin-top: 10px; background: #0f0;" onclick="triggerPayday()">📥 GENERATE DOWNLOAD LINK</button>
             </div>
         </div>
 
         <div class="hub-card">
-            <h3 style="color: var(--neon); margin-top: 0; letter-spacing: 2px;">⚡ COMMAND CENTER</h3>
-            <button class="btn" style="background: rgba(255,255,255,0.05); color: #fff; margin-bottom: 10px;" onclick="triggerPayday()">LATEST ANIME UPDATES</button>
-            <button class="btn" style="background: rgba(255,255,255,0.05); color: #fff;" onclick="triggerPayday()">FUTURISTIC UTILITY TOOLS</button>
+            <h3 style="color: var(--neon); margin-top: 0; letter-spacing: 2px;">⚡ DASHBOARD HUB</h3>
+            <button class="btn" style="background: rgba(255,255,255,0.05); color: #fff; margin-bottom: 10px;" onclick="triggerPayday()">LATEST EMPIRE UPDATES</button>
         </div>
     </div>
 
-    <div id="ad-container">
-        <script src="https://pl28660559.effectivegatecpm.com/be/27/c1/be27c1106b4f71490f78289133731a6b.js"></script>
-    </div>
+    <script src="https://pl28660559.effectivegatecpm.com/be/27/c1/be27c1106b4f71490f78289133731a6b.js"></script>
 
-    <div id="loader">
-        <div class="spinner"></div>
-        <p style="color:var(--neon); margin-top:25px; font-weight:bold; letter-spacing:3px;">BYPASSING WORLDWIDE SERVERS...</p>
-    </div>
+    <div id="loader"><div class="spinner"></div><p style="color:var(--neon); margin-top:25px; font-weight:bold; letter-spacing:3px;">BYPASSING WORLDWIDE SERVERS...</p></div>
 
     <script>
         const tg = window.Telegram.WebApp;
         tg.expand();
 
-        // 1. DYNAMIC SEARCH LOGIC (The "Universal Search" Simulator)
         function executeSearch() {
             const query = document.getElementById('search-input').value;
             if(!query) return;
-
             document.getElementById('loader').style.display = 'flex';
-            
-            // Simulates indexing the internet in 2 seconds
             setTimeout(() => {
                 document.getElementById('loader').style.display = 'none';
                 document.getElementById('results-area').style.display = 'block';
                 document.getElementById('results-content').innerHTML = `
-                    <div class="res-item">📡 SOURCE A: <b>${query} [Dork: Indexed]</b> - Found</div>
-                    <div class="res-item">📡 SOURCE B: <b>${query} [Direct Mirror]</b> - Ready</div>
-                    <div class="res-item">📡 SOURCE C: <b>${query} [High Speed 4K]</b> - Available</div>
+                    <div class="res-item">📡 SOURCE A: <b>${query} [4K Indexed]</b> - Found</div>
+                    <div class="res-item">📡 SOURCE B: <b>${query} [Secure Server]</b> - Ready</div>
                 `;
             }, 2000);
         }
 
-        // 2. MONETIZED PAYDAY LOGIC
         function triggerPayday() {
             document.getElementById('loader').style.display = 'flex';
             setTimeout(() => {
-                // YOUR ADSTERRA DIRECT LINK (PRESERVED)
                 window.location.href = "https://www.effectivegatecpm.com/mhn5eu40?key=8196e8d80825e5402508808589e75424"; 
             }, 3000);
-        }
-
-        // Context-Aware UI for Admin
-        const urlParams = new URLSearchParams(window.location.search);
-        if (urlParams.get('role') === 'admin') {
-            document.getElementById('status-head').innerText = "🛡 COMMANDER HUB";
-            document.getElementById('status-head').style.color = "#0f0";
         }
     </script>
 </body>
