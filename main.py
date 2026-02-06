@@ -1,6 +1,7 @@
 import os
 import threading
 import socketserver
+import http.server  # <--- ADDED THIS FIXED IMPORT
 import asyncio
 import requests
 import json
@@ -101,7 +102,10 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
 # --- [ 5. SERVER KEEPALIVE ] ---
 def run_server():
     port = int(os.environ.get("PORT", 8080))
-    with socketserver.TCPServer(("", port), socketserver.SimpleHTTPRequestHandler) as httpd:
+    # FIXED: Used http.server instead of socketserver for the handler
+    Handler = http.server.SimpleHTTPRequestHandler
+    with socketserver.TCPServer(("", port), Handler) as httpd:
+        print(f"Serving on port {port}")
         httpd.serve_forever()
 
 if __name__ == "__main__":
