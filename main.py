@@ -14,7 +14,7 @@ from telegram.constants import ChatMemberStatus
 TOKEN = "8503812037:AAFu6zCSez0ro9NIFJX65v2r_9MvLEiDbgQ"
 ADMIN_ID = 1179345537
 CHANNEL_ID = "@ar_downloader"
-APP_URL = "https://arsycoxxx-cell.github.io/"
+APP_URL = "https://arsycoxxx-cell.github.io/AR/"
 TMDB_KEY = "19241042e5671d4369263a2b6f8e7ff5"
 NEWS_KEY = "pub_114d737697a4438e977f933d8342f495"
 
