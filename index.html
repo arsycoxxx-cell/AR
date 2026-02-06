@@ -6,42 +6,42 @@
     <title>AR EMPIRE | SUBSCRIBER HUB</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
-        :root { --neon: #00f2fe; --glass: rgba(0, 0, 0, 0.6); }
-        body { margin: 0; background: #000; color: #fff; font-family: sans-serif; height: 100vh; overflow: hidden; }
+        :root { --neon: #00f2fe; --glass: rgba(0, 0, 0, 0.7); }
+        body { margin: 0; background: #000; color: #fff; font-family: sans-serif; height: 100vh; overflow-y: auto; }
         
-        /* CHARACTER BACKGROUND: NO BLUR */
+        /* CHARACTER BACKGROUND: NO BLUR, HIGH VISIBILITY */
         #bg { 
             position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
             background: url('./bg.jpg') no-repeat center center/cover; 
-            z-index: -1; 
+            filter: none !important; z-index: -1; 
         }
 
         .container { padding: 90px 15px; text-align: center; }
         .hub-card { background: var(--glass); border: 1px solid var(--neon); border-radius: 20px; padding: 25px; margin-bottom: 25px; }
         
-        .search-box { width: 100%; padding: 18px; background: rgba(0,0,0,0.8); border: 1px solid var(--neon); color: #fff; border-radius: 12px; margin-bottom: 15px; text-align: center; }
+        .search-box { width: 100%; padding: 18px; background: rgba(0,0,0,0.8); border: 1px solid var(--neon); color: #fff; border-radius: 12px; margin-bottom: 15px; text-align: center; font-size: 16px; }
         .btn { background: linear-gradient(90deg, #00f2fe, #4facfe); border: none; padding: 18px; width: 100%; border-radius: 12px; color: #000; font-weight: 900; cursor: pointer; text-transform: uppercase; }
 
-        /* SUBSCRIPTION GATE OVERLAY */
-        #gate { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 2000; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 20px; box-sizing: border-box; }
+        /* SUBSCRIPTION GATE */
+        #gate { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 2000; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 20px; }
     </style>
 </head>
 <body>
     <div id="bg"></div>
 
     <div id="gate">
-        <h1 style="color:var(--neon)">ACCESS RESTRICTED</h1>
-        <p>You must be a subscriber of <b>@ar_downloader</b> to access the Empire Database.</p>
-        <button class="btn" onclick="window.location.href='https://t.me/ar_downloader'">🚀 JOIN CHANNEL NOW</button>
-        <button class="btn" style="margin-top:10px; background:#fff;" onclick="checkSub()">🔄 I HAVE JOINED</button>
+        <h1 style="color:var(--neon)">ACCESS DENIED</h1>
+        <p>You must be a subscriber of <b>@ar_downloader</b> to use the Empire App.</p>
+        <button class="btn" onclick="window.location.href='https://t.me/ar_downloader'">🚀 JOIN CHANNEL</button>
+        <button class="btn" style="margin-top:10px; background:#fff;" onclick="unlock()">🔄 I HAVE JOINED</button>
     </div>
 
     <div class="container" id="main-content" style="display:none;">
-        <h1 style="color:var(--neon); text-shadow: 0 0 15px var(--neon);">AR SYSTEM v4.0</h1>
+        <h1 style="color:var(--neon); text-shadow: 0 0 15px var(--neon);">AR EMPIRE v4.0</h1>
         <div class="hub-card">
             <input type="text" id="q" class="search-box" placeholder="Find anything online...">
             <button class="btn" onclick="executeSearch()">SEARCH WORLDWIDE</button>
-            <div id="results" style="display:none; margin-top:15px; text-align:left;">
+            <div id="results" style="display:none; margin-top:15px;">
                 <div id="links"></div>
                 <button class="btn" style="background:#0f0; margin-top:10px;" onclick="triggerAds()">📥 UNLOCK DOWNLOAD LINK</button>
             </div>
@@ -52,10 +52,7 @@
         const tg = window.Telegram.WebApp;
         tg.expand();
 
-        // SIMULATED CHECK: In a real bot, the main.py handles this, but this protects the UI
-        function checkSub() {
-            // For now, we allow the UI to open if they click 'I have joined' 
-            // The bot (main.py) will double-check their ID when they actually try to download.
+        function unlock() {
             document.getElementById('gate').style.display = 'none';
             document.getElementById('main-content').style.display = 'block';
         }
@@ -65,11 +62,12 @@
             if(!val) return;
             document.getElementById('results').style.display = 'block';
             document.getElementById('links').innerHTML = `
-                <div style="background:rgba(0,255,0,0.2); padding:10px; margin-bottom:5px; border-radius:8px;">📡 FOUND: ${val} [4K / High Speed]</div>
+                <div style="background:rgba(0,255,0,0.2); padding:10px; border-radius:8px; text-align:left;">📡 FOUND: ${val} [4K / Direct Link]</div>
             `;
         }
 
         function triggerAds() {
+            // REDIRECT TO YOUR PAYDAY LINK
             window.top.location.href = "https://www.effectivegatecpm.com/mhn5eu40?key=8196e8d80825e5402508808589e75424";
         }
     </script>
