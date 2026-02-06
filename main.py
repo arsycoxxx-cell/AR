@@ -118,6 +118,90 @@ if __name__ == "__main__":
         
     print("AR SYCO MONOLITH ONLINE")
     app.run_polling()
+            # 1. POST ANIME/DONGHUA
+            anime_list = fetch_anime_donghua()
+            for item in anime_list:
+                title = item['title']
+                img = item['images']['jpg']['large_image_url']
+                # DEEP LINK: Encodes the title so the App knows what to search
+                safe_title = title.replace(" ", "_")
+                
+                caption = (
+                    f"🏮 <b>NEW RELEASE: {title}</b>\n"
+                    f"⚡ <i>Status:</i> AIRING NOW\n"
+                    f"📡 <i>Source:</i> 4K/1080p\n\n"
+                    f"👇 <b>CLICK TO WATCH & DOWNLOAD</b>"
+                )
+                # CONNECTS CHANNEL TO DASHBOARD AUTO-SEARCH
+                btn = [[InlineKeyboardButton("📥 DOWNLOAD EPISODE", web_app=WebAppInfo(url=f"{APP_URL}?startapp=search_{safe_title}"))]]
+                await context.bot.send_photo(chat_id=CHANNEL_ID, photo=img, caption=caption, parse_mode='HTML', reply_markup=InlineKeyboardMarkup(btn))
+                await asyncio.sleep(1200) # 20 mins between posts
+
+            # 2. POST MOVIES/WEB SERIES
+            movie_list = fetch_movies()
+            for item in movie_list:
+                name = item.get('title', item.get('name'))
+                img = f"https://image.tmdb.org/t/p/w500{item['poster_path']}"
+                safe_name = name.replace(" ", "_")
+                
+                caption = (
+                    f"🎥 <b>PREMIERE: {name}</b>\n"
+                    f"🌟 <i>Rating:</i> {item['vote_average']}/10\n"
+                    f"⚡ <i>Quality:</i> WEB-DL / 4K\n\n"
+                    f"👇 <b>CLICK TO WATCH & DOWNLOAD</b>"
+                )
+                btn = [[InlineKeyboardButton("📥 DOWNLOAD MOVIE", web_app=WebAppInfo(url=f"{APP_URL}?startapp=search_{safe_name}"))]]
+                await context.bot.send_photo(chat_id=CHANNEL_ID, photo=img, caption=caption, parse_mode='HTML', reply_markup=InlineKeyboardMarkup(btn))
+                await asyncio.sleep(1200)
+
+            await asyncio.sleep(14400) # Sleep 4 Hours then repeat
+        except Exception as e:
+            print(f"Auto-Heal Triggered: {e}") # Silent error handling
+            await asyncio.sleep(60)
+
+# --- [ 4. THE CONTROLLER & AD GUARD ] ---
+async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    user = update.effective_user
+    args = context.args
+    
+    # CONTEXT AWARENESS: Did they come from a specific search?
+    # If they clicked a link like t.me/bot?start=naruto, the app opens searching for Naruto.
+    payload = args[0] if args else "dashboard"
+
+    # ADMIN AD-GUARD: Checks if it is YOU
+    if user.id == ADMIN_ID:
+        role = "admin"
+        status = "🛡️ <b>COMMANDER MODE</b>\nAds: DISABLED\nSystem: UNLOCKED"
+    else:
+        role = "user"
+        status = "⚡ <b>AR SYCO SYSTEM</b>\nAds: ACTIVE\nAccess: GRANTED"
+
+    # GENERATE SMART LINK
+    final_url = f"{APP_URL}?role={role}&task={payload}"
+
+    keyboard = [
+        [InlineKeyboardButton("🚀 LAUNCH DASHBOARD", web_app=WebAppInfo(url=final_url))],
+        [InlineKeyboardButton("🌐 SEARCH ARCHIVE", url=final_url)]
+    ]
+    await update.message.reply_html(status, reply_markup=InlineKeyboardMarkup(keyboard))
+
+# --- [ 5. SERVER KEEPALIVE ] ---
+def run_server():
+    port = int(os.environ.get("PORT", 8080))
+    with socketserver.TCPServer(("", port), socketserver.SimpleHTTPRequestHandler) as httpd:
+        httpd.serve_forever()
+
+if __name__ == "__main__":
+    threading.Thread(target=run_server, daemon=True).start()
+    app = Application.builder().token(TOKEN).build()
+    app.add_handler(CommandHandler("start", start))
+    
+    # Activate the Auto-Poster
+    if CHANNEL_ID:
+        app.job_queue.run_once(auto_post_loop, 10)
+        
+    print("AR SYCO MONOLITH ONLINE")
+    app.run_polling()
     reply_markup = InlineKeyboardMarkup(keyboard)
     
     await update.message.reply_html(status_msg, reply_markup=reply_markup)
