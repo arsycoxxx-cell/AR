@@ -10,7 +10,6 @@ from telegram.ext import Application, CommandHandler, ContextTypes
 from telegram.constants import ChatMemberStatus
 
 # --- [ 1. EMPIRE CONFIGURATION ] ---
-# Your keys are hardcoded correctly here.
 TOKEN = "8503812037:AAFu6zCSez0ro9NIFJX65v2r_9MvLEiDbgQ"
 ADMIN_ID = 1179345537
 CHANNEL_ID = "@ar_downloader"
@@ -20,66 +19,52 @@ NEWS_KEY = "pub_114d737697a4438e977f933d8342f495"
 
 # --- [ 2. SELF-HEALING & SCRAPER ENGINES ] ---
 def fetch_anime_donghua():
-    # Jikan API for Anime/Donghua Schedules
     try:
         url = "https://api.jikan.moe/v4/schedules/now"
         data = requests.get(url).json()['data']
-        # Filter for top popularity to ensure quality
         return sorted(data, key=lambda x: x['popularity'])[:2]
-    except Exception as e:
-        print(f"Scraper Error: {e}")
-        return []
+    except: return []
 
 def fetch_movies():
-    # TMDB for Movies/Web Series
     try:
         url = f"https://api.themoviedb.org/3/trending/all/day?api_key={TMDB_KEY}"
         data = requests.get(url).json()['results'][:2]
         return data
-    except Exception as e:
-        print(f"TMDB Error: {e}")
-        return []
+    except: return []
 
 # --- [ 3. THE AUTONOMOUS GHOST WRITER ] ---
 async def auto_post_loop(context: ContextTypes.DEFAULT_TYPE):
-    # Runs continuously to fill your channel with content
-    print("Auto-Poster Started...")
     while True:
         try:
-            # 1. POST ANIME/DONGHUA
+            # 1. POST ANIME
             anime_list = fetch_anime_donghua()
             for item in anime_list:
                 title = item['title']
                 try:
                     img = item['images']['jpg']['large_image_url']
-                except: continue # Skip if no image
+                except: continue
                 
-                # DEEP LINK: Encodes the title so the App knows what to search
                 safe_title = title.replace(" ", "_")
-                
                 caption = (
                     f"🏮 <b>NEW RELEASE: {title}</b>\n"
                     f"⚡ <i>Status:</i> AIRING NOW\n"
                     f"📡 <i>Source:</i> 4K/1080p\n\n"
                     f"👇 <b>CLICK TO WATCH & DOWNLOAD</b>"
                 )
-                # CONNECTS CHANNEL TO DASHBOARD AUTO-SEARCH
                 btn = [[InlineKeyboardButton("📥 DOWNLOAD EPISODE", web_app=WebAppInfo(url=f"{APP_URL}?startapp=search_{safe_title}"))]]
                 await context.bot.send_photo(chat_id=CHANNEL_ID, photo=img, caption=caption, parse_mode='HTML', reply_markup=InlineKeyboardMarkup(btn))
-                await asyncio.sleep(1200) # 20 mins between posts
+                await asyncio.sleep(1200)
 
-            # 2. POST MOVIES/WEB SERIES
+            # 2. POST MOVIES
             movie_list = fetch_movies()
             for item in movie_list:
                 name = item.get('title', item.get('name'))
                 if not name: continue
-                
                 try:
                     img = f"https://image.tmdb.org/t/p/w500{item['poster_path']}"
                 except: continue
-
-                safe_name = name.replace(" ", "_")
                 
+                safe_name = name.replace(" ", "_")
                 caption = (
                     f"🎥 <b>PREMIERE: {name}</b>\n"
                     f"🌟 <i>Rating:</i> {item.get('vote_average', 'N/A')}/10\n"
@@ -90,34 +75,27 @@ async def auto_post_loop(context: ContextTypes.DEFAULT_TYPE):
                 await context.bot.send_photo(chat_id=CHANNEL_ID, photo=img, caption=caption, parse_mode='HTML', reply_markup=InlineKeyboardMarkup(btn))
                 await asyncio.sleep(1200)
 
-            await asyncio.sleep(14400) # Sleep 4 Hours then repeat
+            await asyncio.sleep(14400)
         except Exception as e:
-            print(f"Auto-Heal Triggered: {e}") # Silent error handling
+            print(f"Auto-Heal Error: {e}")
             await asyncio.sleep(60)
 
-# --- [ 4. THE CONTROLLER & AD GUARD ] ---
+# --- [ 4. THE CONTROLLER ] ---
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user = update.effective_user
     args = context.args
     
-    # CONTEXT AWARENESS: Did they come from a specific search?
+    # Context & Admin Check
     payload = args[0] if args else "dashboard"
-
-    # ADMIN AD-GUARD: Checks if it is YOU
     if user.id == ADMIN_ID:
         role = "admin"
-        status = "🛡️ <b>COMMANDER MODE</b>\nAds: DISABLED\nSystem: UNLOCKED"
+        status = "🛡️ <b>COMMANDER MODE</b>\nAds: DISABLED"
     else:
         role = "user"
-        status = "⚡ <b>AR SYCO SYSTEM</b>\nAds: ACTIVE\nAccess: GRANTED"
+        status = "⚡ <b>AR SYCO SYSTEM</b>\nAds: ACTIVE"
 
-    # GENERATE SMART LINK
     final_url = f"{APP_URL}?role={role}&task={payload}"
-
-    keyboard = [
-        [InlineKeyboardButton("🚀 LAUNCH DASHBOARD", web_app=WebAppInfo(url=final_url))],
-        [InlineKeyboardButton("🌐 SEARCH ARCHIVE", url=final_url)]
-    ]
+    keyboard = [[InlineKeyboardButton("🚀 LAUNCH DASHBOARD", web_app=WebAppInfo(url=final_url))]]
     await update.message.reply_html(status, reply_markup=InlineKeyboardMarkup(keyboard))
 
 # --- [ 5. SERVER KEEPALIVE ] ---
@@ -127,14 +105,10 @@ def run_server():
         httpd.serve_forever()
 
 if __name__ == "__main__":
-    # Start the Keepalive Server
     threading.Thread(target=run_server, daemon=True).start()
-    
-    # Build the Bot
     app = Application.builder().token(TOKEN).build()
     app.add_handler(CommandHandler("start", start))
     
-    # Activate the Auto-Poster Job
     if CHANNEL_ID:
         app.job_queue.run_once(auto_post_loop, 10)
         
