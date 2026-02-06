@@ -6,55 +6,53 @@
     <title>AR SYCO | EMPIRE INTERFACE</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
-        :root { --neon: #00f2fe; --glass: rgba(255, 255, 255, 0.04); --blur: 15px; }
-        body { margin: 0; background: #000; color: #fff; font-family: 'Segoe UI', sans-serif; height: 100vh; overflow-y: auto; overflow-x: hidden; }
+        :root { --neon: #00f2fe; --glass: rgba(255, 255, 255, 0.05); }
+        body { margin: 0; background: #000; color: #fff; font-family: 'Segoe UI', sans-serif; height: 100vh; overflow: hidden; }
 
-        /* CHARACTER BACKGROUND */
+        /* FIXED BACKGROUND IMAGE */
         #bg-image {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: url('./bg.jpg') no-repeat center center/cover;
-            filter: blur(15px) brightness(0.3); z-index: -1;
+            filter: blur(10px) brightness(0.3); z-index: -1;
         }
 
-        /* GLASSMOPRHISM NAVIGATION BAR */
+        /* NEON NAVIGATION BAR */
         nav {
-            position: fixed; top: 0; width: 100%; height: 65px;
-            background: rgba(0,0,0,0.85); backdrop-filter: blur(20px);
+            position: fixed; top: 0; width: 100%; height: 60px;
+            background: rgba(0,0,0,0.8); backdrop-filter: blur(15px);
             border-bottom: 1px solid var(--neon); z-index: 1000;
             display: flex; align-items: center; justify-content: space-around;
-            box-shadow: 0 5px 20px rgba(0, 242, 254, 0.15);
         }
-        nav a { color: var(--neon); text-decoration: none; font-size: 11px; font-weight: 900; letter-spacing: 1.5px; text-transform: uppercase; }
+        nav a { color: var(--neon); text-decoration: none; font-size: 10px; font-weight: bold; letter-spacing: 2px; text-transform: uppercase; }
 
-        .container { padding: 90px 15px 30px; text-align: center; max-width: 500px; margin: 0 auto; }
+        .container { padding: 80px 20px; text-align: center; max-width: 500px; margin: 0 auto; }
         
-        .hub-card { 
+        .card { 
             background: var(--glass); border: 1px solid rgba(0, 242, 254, 0.2);
             border-radius: 20px; padding: 25px; margin-bottom: 20px;
-            backdrop-filter: blur(var(--blur)); box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+            backdrop-filter: blur(10px); box-shadow: 0 0 30px rgba(0, 242, 254, 0.1);
         }
 
-        .search-box {
-            width: 100%; padding: 15px; background: rgba(0,0,0,0.7); border: 1px solid var(--neon);
-            color: white; border-radius: 12px; margin-bottom: 15px; outline: none; font-size: 16px;
-            box-sizing: border-box; text-align: center;
+        .input-box {
+            width: 100%; padding: 15px; background: rgba(0,0,0,0.5); border: 1px solid var(--neon);
+            color: #fff; border-radius: 12px; margin-bottom: 15px; box-sizing: border-box; outline: none;
         }
 
         .btn { 
             background: linear-gradient(90deg, #00f2fe, #4facfe); border: none; 
-            padding: 18px; width: 100%; border-radius: 12px; color: #000; font-weight: 900;
-            cursor: pointer; text-transform: uppercase; letter-spacing: 2px;
-            box-shadow: 0 5px 15px rgba(0, 242, 254, 0.4);
+            padding: 15px; width: 100%; border-radius: 12px; color: #000; font-weight: 900;
+            text-transform: uppercase; cursor: pointer;
         }
 
-        #results-area { display: none; margin-top: 20px; text-align: left; }
-        .res-item { background: rgba(0, 255, 0, 0.08); border-left: 5px solid #0f0; padding: 12px; margin-bottom: 10px; border-radius: 10px; font-size: 13px; }
+        /* SEARCH RESULTS */
+        #results { display: none; margin-top: 15px; text-align: left; }
+        .res-item { background: rgba(0, 255, 0, 0.1); border-left: 4px solid #0f0; padding: 10px; border-radius: 8px; font-size: 12px; margin-bottom: 8px; }
 
         #loader {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95);
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000;
             z-index: 10000; display: none; flex-direction: column; align-items: center; justify-content: center;
         }
-        .spinner { width: 60px; height: 60px; border: 5px solid var(--neon); border-top-color: transparent; border-radius: 50%; animation: spin 0.8s linear infinite; }
+        .spinner { width: 50px; height: 50px; border: 4px solid var(--neon); border-top-color: transparent; border-radius: 50%; animation: spin 0.8s linear infinite; }
         @keyframes spin { to { transform: rotate(360deg); } }
     </style>
 </head>
@@ -64,47 +62,44 @@
         <a href="#" onclick="location.reload()">🏠 HOME</a>
         <a href="#" onclick="triggerPayday()">🎬 MOVIES</a>
         <a href="#" onclick="triggerPayday()">🏮 ANIME</a>
-        <a href="#" onclick="triggerPayday()">🛠 TOOLS</a>
     </nav>
 
     <div class="container">
-        <h1 id="status-head" style="color: var(--neon); text-shadow: 0 0 20px var(--neon); font-size: 30px;">AR EMPIRE v4.0</h1>
+        <h1 style="color:var(--neon); text-shadow: 0 0 10px var(--neon);">AR EMPIRE v4.0</h1>
         
-        <div class="hub-card">
-            <h3 style="color: var(--neon); margin-top: 0; letter-spacing: 2px;">🔍 UNIVERSAL DORK ENGINE</h3>
-            <input type="text" id="search-input" class="search-box" placeholder="Search the whole internet...">
-            <button class="btn" onclick="executeSearch()">SCAN INTERNET</button>
+        <div class="card">
+            <h4 style="margin-top:0; color:var(--neon);">🔍 GLOBAL SEARCH ENGINE</h4>
+            <input type="text" id="query" class="input-box" placeholder="Find anything on the internet...">
+            <button class="btn" onclick="startSearch()">EXECUTE SEARCH</button>
             
-            <div id="results-area">
-                <div id="results-content"></div>
-                <button class="btn" style="margin-top: 10px; background: #0f0;" onclick="triggerPayday()">📥 GENERATE DOWNLOAD LINK</button>
+            <div id="results">
+                <div id="links"></div>
+                <button class="btn" style="margin-top:10px;" onclick="triggerPayday()">📥 GET DOWNLOAD TICKET</button>
             </div>
-        </div>
-
-        <div class="hub-card">
-            <h3 style="color: var(--neon); margin-top: 0; letter-spacing: 2px;">⚡ DASHBOARD HUB</h3>
-            <button class="btn" style="background: rgba(255,255,255,0.05); color: #fff; margin-bottom: 10px;" onclick="triggerPayday()">LATEST EMPIRE UPDATES</button>
         </div>
     </div>
 
     <script src="https://pl28660559.effectivegatecpm.com/be/27/c1/be27c1106b4f71490f78289133731a6b.js"></script>
 
-    <div id="loader"><div class="spinner"></div><p style="color:var(--neon); margin-top:25px; font-weight:bold; letter-spacing:3px;">BYPASSING WORLDWIDE SERVERS...</p></div>
+    <div id="loader">
+        <div class="spinner"></div>
+        <p style="color:var(--neon); margin-top:20px;">INDEXING WORLDWIDE SERVERS...</p>
+    </div>
 
     <script>
         const tg = window.Telegram.WebApp;
         tg.expand();
 
-        function executeSearch() {
-            const query = document.getElementById('search-input').value;
-            if(!query) return;
+        function startSearch() {
+            const q = document.getElementById('query').value;
+            if(!q) return;
             document.getElementById('loader').style.display = 'flex';
             setTimeout(() => {
                 document.getElementById('loader').style.display = 'none';
-                document.getElementById('results-area').style.display = 'block';
-                document.getElementById('results-content').innerHTML = `
-                    <div class="res-item">📡 SOURCE A: <b>${query} [4K Indexed]</b> - Found</div>
-                    <div class="res-item">📡 SOURCE B: <b>${query} [Secure Server]</b> - Ready</div>
+                document.getElementById('results').style.display = 'block';
+                document.getElementById('links').innerHTML = `
+                    <div class="res-item">📡 SOURCE A: <b>${q} [4K Indexed]</b> - Found!</div>
+                    <div class="res-item">📡 SOURCE B: <b>${q} [Direct Mirror]</b> - Ready</div>
                 `;
             }, 2000);
         }
@@ -112,7 +107,8 @@
         function triggerPayday() {
             document.getElementById('loader').style.display = 'flex';
             setTimeout(() => {
-                window.location.href = "https://www.effectivegatecpm.com/mhn5eu40?key=8196e8d80825e5402508808589e75424"; 
+                // REDIRECTS TO YOUR DIRECT LINK
+                window.location.href = "https://www.effectivegatecpm.com/mhn5eu40?key=8196e8d80825e5402508808589e75424";
             }, 3000);
         }
     </script>
