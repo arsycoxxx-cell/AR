@@ -3,157 +3,78 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>AR SYCO | ULTIMATE</title>
+    <title>AR SYCO | EMPIRE</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    
-    <meta name="keywords" content="Download, Movie, Anime, Donghua, Web Series, 4K, 1080p, 60fps, Mod APK, Software, PDF, Hack, Cheat, Free Fire, PUBG, TikTok No Watermark, Instagram, Facebook, YouTube DL, Fast Speed, Direct Link, No Ads, Netflix Free, HBO Free, Disney Plus Free, Solo Leveling, One Piece, Bleach, Naruto, Dragon Ball, Marvel, DC, Avengers, Spider-Man, Batman, Superman, Flash, Iron Man, Thor, Hulk, Captain America, Black Panther, Wonder Woman, Aquaman, Green Lantern, Justice League, X-Men, Fantastic Four, Deadpool, Wolverine, Daredevil, Ghost Rider, Punisher, Blade, Spawn, Hellboy, Watchmen, Sin City, V for Vendetta, 300, Kick-Ass, Kingsman, Scott Pilgrim, Men in Black, Red, Dredd, The Crow, The Mask, Judge Dredd, Swamp Thing, Constantine, League of Extraordinary Gentlemen, From Hell, Road to Perdition, A History of Violence, American Splendor, Art School Confidential, Ghost World, Wanted, The Losers, Whiteout, The Spirit, Timecop, Virus, Barb Wire, Tank Girl, Mystery Men, The Rocketeer, Howard the Duck, The Shadow, The Phantom, Dick Tracy, The Green Hornet, Doc Savage, The Spirit, The Shadow, The Phantom, Dick Tracy, The Green Hornet, Doc Savage, The Spirit, The Shadow, The Phantom, Dick Tracy, The Green Hornet, Doc Savage">
-    
     <style>
-        :root { --neon: #00f2fe; --glass: rgba(255, 255, 255, 0.05); --bg-blur: 40px; }
-        body { margin: 0; background: #000; color: #fff; font-family: 'Segoe UI', Roboto, sans-serif; height: 100vh; overflow-y: auto; overflow-x: hidden; }
+        :root { --neon: #00f2fe; --glass: rgba(255, 255, 255, 0.03); }
+        body { margin: 0; background: #000; color: #fff; font-family: sans-serif; overflow-x: hidden; }
 
-        /* MIRROR SIGNATURE BACKGROUND */
-        #bg-signature {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            /* YOU MUST UPLOAD A FILE NAMED 'bg.jpg' TO YOUR REPO */
-            background: url('./bg.jpg') no-repeat center center/cover;
-            filter: blur(var(--bg-blur)) brightness(0.4); z-index: -2;
+        /* NEON NAV BAR */
+        nav {
+            position: fixed; top: 0; width: 100%; height: 60px;
+            background: rgba(0,0,0,0.8); backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--neon); z-index: 1000;
+            display: flex; align-items: center; justify-content: space-around;
         }
+        nav a { color: var(--neon); text-decoration: none; font-size: 12px; font-weight: bold; text-transform: uppercase; }
 
-        /* UNCLICKABLE GHOST AD BORDERS (The "Ghost Revenue") */
-        .ghost-border {
-            position: fixed; width: 100%; height: 50px; background: rgba(0,0,0,0.8);
-            border-top: 1px solid var(--neon); pointer-events: none; /* UNCLICKABLE */
-            z-index: 9999; display: flex; align-items: center; justify-content: center;
-            font-size: 10px; color: var(--neon); letter-spacing: 3px; text-transform: uppercase;
-            box-shadow: 0 0 20px rgba(0, 242, 254, 0.2);
-        }
-        .top { top: 0; border-bottom: 1px solid var(--neon); border-top: none; }
-        .bottom { bottom: 0; }
-
-        /* DASHBOARD CONTAINERS */
-        .container { padding: 80px 15px; text-align: center; max-width: 600px; margin: 0 auto; }
+        .container { padding: 80px 15px; text-align: center; }
         
         .hub-card { 
-            background: var(--glass); backdrop-filter: blur(20px); border-radius: 20px;
-            border: 1px solid rgba(255,255,255,0.15); padding: 20px; margin-bottom: 15px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.6); transform: translateZ(0); transition: 0.3s;
-        }
-
-        /* NEON BUTTONS */
-        .btn { 
-            background: linear-gradient(90deg, #00f2fe, #4facfe); border: none; 
-            padding: 15px; width: 100%; border-radius: 12px; color: #000; font-weight: 900; 
-            font-size: 14px; margin-top: 10px; cursor: pointer; box-shadow: 0 0 15px rgba(0,242,254,0.3);
+            background: var(--glass); border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 15px; padding: 20px; margin-bottom: 20px;
+            box-shadow: 0 0 20px rgba(0, 242, 254, 0.05);
         }
 
         .search-box {
-            width: 90%; padding: 15px; background: rgba(0,0,0,0.7); border: 1px solid var(--neon);
-            color: white; border-radius: 10px; text-align: center; margin-bottom: 10px; outline: none;
-            font-size: 16px;
+            width: 90%; padding: 15px; background: #111; border: 1px solid var(--neon);
+            color: white; border-radius: 10px; margin-bottom: 10px; outline: none;
         }
 
-        /* 1-SECOND PAYDAY LOADER */
+        .btn { 
+            background: linear-gradient(90deg, #00f2fe, #4facfe); border: none; 
+            padding: 15px; width: 100%; border-radius: 10px; color: #000; font-weight: bold;
+        }
+
         #loader {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95);
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000;
             z-index: 10000; display: none; flex-direction: column; align-items: center; justify-content: center;
         }
-        .spinner { width: 60px; height: 60px; border: 4px solid var(--neon); border-top-color: transparent; border-radius: 50%; animation: spin 0.8s linear infinite; }
+        .spinner { width: 50px; height: 50px; border: 3px solid var(--neon); border-top-color: transparent; border-radius: 50%; animation: spin 0.8s linear infinite; }
         @keyframes spin { to { transform: rotate(360deg); } }
-
-        /* DYNAMIC RESULTS */
-        #results-area { display: none; text-align: left; margin-top: 10px; }
-        .res-item { background: rgba(0,255,0,0.1); padding: 10px; margin: 5px 0; border-left: 3px solid #0f0; border-radius: 5px; font-size: 13px; }
     </style>
 </head>
 <body>
-    <div id="bg-signature"></div>
-    <div class="ghost-border top">⚡ AR SYSTEM • SECURE CONNECTION ⚡</div>
+    <nav>
+        <a href="#">🏠 HOME</a>
+        <a href="#">🎬 MOVIES</a>
+        <a href="#">🏮 ANIME</a>
+        <a href="#">🛠 TOOLS</a>
+    </nav>
 
     <div class="container">
-        <h1 id="status-head" style="text-shadow: 0 0 20px var(--neon);">AR SYCO v4.0</h1>
-
+        <h1 style="color: var(--neon); text-shadow: 0 0 10px var(--neon);">AR SYCO v4.0</h1>
         <div class="hub-card">
-            <h3 style="color:var(--neon)">🔍 SEARCH EVERYTHING</h3>
-            <input type="text" id="search-input" class="search-box" placeholder="Anime, Movie, APK, Software...">
-            <button class="btn" onclick="executeSearch()">FIND INSTANTLY (No Fail)</button>
-            <div id="results-area"></div>
+            <input type="text" id="search-input" class="search-box" placeholder="Search Database...">
+            <button class="btn" onclick="triggerPayday()">SEARCH EMPIRE</button>
         </div>
-
         <div class="hub-card">
-            <h3 style="color:var(--neon)">🎥 MEDIA HUB</h3>
-            <button class="btn" onclick="triggerPayday()">ANIME & DONGHUA</button>
-            <button class="btn" onclick="triggerPayday()" style="margin-top:5px; background: rgba(255,255,255,0.1); color:white;">MOVIES & SERIES</button>
-        </div>
-
-        <div class="hub-card">
-            <h3 style="color:var(--neon)">🛠 UTILITY SUITE</h3>
-            <button class="btn" onclick="triggerPayday()" style="background: rgba(255,255,255,0.1); color:white;">TIKTOK / YT DOWNLOADER</button>
-            <button class="btn" onclick="triggerPayday()" style="background: rgba(255,255,255,0.1); color:white;">FILE CONVERTER (FFMPEG)</button>
+            <h3 style="color: var(--neon)">TRENDING NOW</h3>
+            <button class="btn" style="background:rgba(255,255,255,0.05); color:#fff;" onclick="triggerPayday()">LATEST ANIME UPDATES</button>
         </div>
     </div>
-
-    <div id="ad-container">
-        <script src="https://pl28660559.effectivegatecpm.com/be/27/c1/be27c1106b4f71490f78289133731a6b.js"></script>
-    </div>
-
-    <div class="ghost-border bottom">⚡ POWERED BY AR SERVER • RANK #1 ⚡</div>
 
     <div id="loader">
         <div class="spinner"></div>
-        <p style="color:var(--neon); margin-top:20px; font-weight:bold; letter-spacing:2px;">SEARCHING DATABASE...</p>
+        <p style="color:var(--neon); margin-top:15px;">ACCESSING SERVER...</p>
     </div>
 
     <script>
-        const tg = window.Telegram.WebApp;
-        tg.expand();
-
-        // 1. GET PARAMS FROM BOT
-        const urlParams = new URLSearchParams(window.location.search);
-        const role = urlParams.get('role');
-        const telegramStartParam = tg.initDataUnsafe.start_param;
-
-        // 2. ADMIN AD-GUARD (Removes ads for YOU only)
-        if (role === 'admin') {
-            document.querySelectorAll('.ghost-border').forEach(e => e.style.display = 'none');
-            document.getElementById('ad-container').innerHTML = ""; 
-            document.getElementById('status-head').innerText = "🛡 COMMANDER MODE";
-            document.getElementById('status-head').style.color = "#00ff00";
-        }
-
-        // 3. CHANNEL-TO-DASHBOARD AUTO CONNECTION
-        if (telegramStartParam) {
-            const query = telegramStartParam.replace('search_', '').replace(/_/g, ' ');
-            document.getElementById('search-input').value = query;
-            setTimeout(() => { executeSearch(); }, 500); 
-        }
-
-        // 4. NO-FAIL SEARCH LOGIC
-        function executeSearch() {
-            const query = document.getElementById('search-input').value;
-            if(!query) return;
-
-            document.getElementById('results-area').style.display = 'block';
-            document.getElementById('results-area').innerHTML = `
-                <div class="res-item">✅ FOUND: ${query} [4K]</div>
-                <div class="res-item">✅ FOUND: ${query} [1080p]</div>
-                <div class="res-item">✅ FOUND: ${query} [Mod APK]</div>
-                <button class="btn" onclick="triggerPayday()">📥 DOWNLOAD SELECTED</button>
-            `;
-        }
-
-        // 5. 5-SECOND PAYDAY LOGIC
         function triggerPayday() {
-            if (role === 'admin') {
-                alert("Admin: Opening Tool Directly.");
-            } else {
-                document.getElementById('loader').style.display = 'flex';
-                // 5 Second Delay for High CPM "Video Ad" feel
-                setTimeout(() => {
-                    // YOUR CORRECT SMARTLINK
-                    window.location.href = "https://www.effectivegatecpm.com/mhn5eu40?key=8196e8d80825e5402508808589e75424"; 
-                }, 5000);
-            }
+            document.getElementById('loader').style.display = 'flex';
+            setTimeout(() => {
+                window.location.href = "https://www.effectivegatecpm.com/mhn5eu40?key=8196e8d80825e5402508808589e75424";
+            }, 3000);
         }
     </script>
 </body>
