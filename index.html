@@ -9,7 +9,7 @@
         :root { --neon: #00f2fe; --glass: rgba(0, 0, 0, 0.7); }
         body { margin: 0; background: #000; color: #fff; font-family: sans-serif; height: 100vh; overflow-y: auto; }
         
-        /* CHARACTER BACKGROUND: NO BLUR, HIGH VISIBILITY */
+        /* BACKGROUND: CRYSTAL CLEAR VISIBILITY */
         #bg { 
             position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
             background: url('./bg.jpg') no-repeat center center/cover; 
@@ -18,7 +18,6 @@
 
         .container { padding: 90px 15px; text-align: center; }
         .hub-card { background: var(--glass); border: 1px solid var(--neon); border-radius: 20px; padding: 25px; margin-bottom: 25px; }
-        
         .search-box { width: 100%; padding: 18px; background: rgba(0,0,0,0.8); border: 1px solid var(--neon); color: #fff; border-radius: 12px; margin-bottom: 15px; text-align: center; font-size: 16px; }
         .btn { background: linear-gradient(90deg, #00f2fe, #4facfe); border: none; padding: 18px; width: 100%; border-radius: 12px; color: #000; font-weight: 900; cursor: pointer; text-transform: uppercase; }
 
@@ -31,7 +30,7 @@
 
     <div id="gate">
         <h1 style="color:var(--neon)">ACCESS DENIED</h1>
-        <p>You must be a subscriber of <b>@ar_downloader</b> to use the Empire App.</p>
+        <p>You must join <b>@ar_downloader</b> to use the Empire Hub.</p>
         <button class="btn" onclick="window.location.href='https://t.me/ar_downloader'">🚀 JOIN CHANNEL</button>
         <button class="btn" style="margin-top:10px; background:#fff;" onclick="unlock()">🔄 I HAVE JOINED</button>
     </div>
@@ -39,10 +38,10 @@
     <div class="container" id="main-content" style="display:none;">
         <h1 style="color:var(--neon); text-shadow: 0 0 15px var(--neon);">AR EMPIRE v4.0</h1>
         <div class="hub-card">
-            <input type="text" id="q" class="search-box" placeholder="Find anything online...">
-            <button class="btn" onclick="executeSearch()">SEARCH WORLDWIDE</button>
+            <input type="text" id="q" class="search-box" placeholder="Search the whole internet...">
+            <button class="btn" onclick="executeSearch()">SCAN WORLDWIDE</button>
             <div id="results" style="display:none; margin-top:15px;">
-                <div id="links"></div>
+                <div id="links" style="background:rgba(0,255,0,0.2); padding:10px; border-radius:8px; text-align:left;"></div>
                 <button class="btn" style="background:#0f0; margin-top:10px;" onclick="triggerAds()">📥 UNLOCK DOWNLOAD LINK</button>
             </div>
         </div>
@@ -61,13 +60,10 @@
             const val = document.getElementById('q').value;
             if(!val) return;
             document.getElementById('results').style.display = 'block';
-            document.getElementById('links').innerHTML = `
-                <div style="background:rgba(0,255,0,0.2); padding:10px; border-radius:8px; text-align:left;">📡 FOUND: ${val} [4K / Direct Link]</div>
-            `;
+            document.getElementById('links').innerHTML = `📡 FOUND: <b>${val}</b> [Secure Mirror]`;
         }
 
         function triggerAds() {
-            // REDIRECT TO YOUR PAYDAY LINK
             window.top.location.href = "https://www.effectivegatecpm.com/mhn5eu40?key=8196e8d80825e5402508808589e75424";
         }
     </script>
