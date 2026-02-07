@@ -6,15 +6,15 @@
     <style>
         body { background: #000; color: #fff; font-family: monospace; padding: 20px; text-align: center; }
         #bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: url('./bg.jpg') no-repeat center center/cover; z-index: -1; }
-        .card { background: rgba(0,0,0,0.9); border: 1px solid #00f2fe; border-radius: 10px; padding: 30px; margin-top: 50px; }
-        .btn { background: #00f2fe; color: #000; padding: 15px; border: none; font-weight: bold; cursor: pointer; text-decoration: none; display: block; margin: 10px 0; border-radius: 5px; }
+        .card { background: rgba(0,0,0,0.9); border: 1px solid #00f2fe; padding: 25px; margin-top: 50px; border-radius: 10px; }
+        .btn { background: #00f2fe; color: #000; padding: 15px; border: none; font-weight: bold; cursor: pointer; text-decoration: none; display: block; margin: 10px 0; }
     </style>
 </head>
 <body>
     <div id="bg"></div>
     <div class="card">
         <h2 style="color:#00f2fe; border-bottom: 2px solid #00f2fe; padding-bottom: 10px;">AR_HUB_FILES</h2>
-        <p>FILE: <span id="fn" style="color:#0f0;"></span></p>
+        <p>FILENAME: <span id="fn" style="color:#0f0;"></span></p>
         <a id="direct" href="#" class="btn">DIRECT_DOWNLOAD</a>
         <a id="chrome" href="#" class="btn" style="background:#0f0;">OPEN_IN_BROWSER</a>
     </div>
