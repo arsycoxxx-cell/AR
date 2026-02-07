@@ -2,52 +2,59 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>AR EMPIRE | DATA SHEET</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EMPIRE MASTER SHEET</title>
     <style>
-        body { background: #000; color: #fff; font-family: 'Courier New', monospace; padding: 20px; }
-        .table { width: 100%; border-collapse: collapse; background: rgba(0,0,0,0.9); border: 1px solid #00f2fe; }
-        th, td { border: 1px solid #00f2fe; padding: 15px; text-align: left; font-size: 11px; }
-        th { color: #00f2fe; text-transform: uppercase; background: #111; }
-        .dl-btn { background: #0f0; color: #000; padding: 8px 12px; border: none; font-weight: bold; cursor: pointer; text-decoration: none; display: inline-block; font-size: 10px; }
+        :root { --neon: #00f2fe; }
+        body { background: #000; color: #fff; font-family: 'Courier New', monospace; padding: 20px; margin: 0; }
+        .ad-border { position: fixed; border: 3px solid var(--neon); z-index: 9999; pointer-events: none; top:0; left:0; right:0; bottom:0; box-shadow: 0 0 15px var(--neon); }
+        h1 { color: var(--neon); text-align: center; font-size: 18px; letter-spacing: 3px; border-bottom: 2px solid var(--neon); padding-bottom: 15px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; background: rgba(0,0,0,0.8); }
+        th, td { border: 1px solid var(--neon); padding: 15px; text-align: left; font-size: 11px; }
+        th { color: var(--neon); text-transform: uppercase; background: #111; }
+        .get-link { background: #0f0; color: #000; border: none; padding: 12px; font-weight: 900; cursor: pointer; text-transform: uppercase; width: 100%; border-radius: 4px; }
     </style>
 </head>
 <body>
-    <h2 style="color:#00f2fe; letter-spacing: 3px;">EMPIRE_MASTER_SHEET</h2>
-    <table class="table">
+    <div class="ad-border"></div>
+    <h1>EMPIRE_MASTER_SHEET</h1>
+    <table>
         <thead>
-            <tr><th>SOURCE</th><th>INDEX_PATH</th><th>ACTION</th></tr>
+            <tr><th>SOURCE_DATABASE</th><th>DATA_PATH</th><th>ACTION</th></tr>
         </thead>
-        <tbody id="sheet-data">
+        <tbody id="sheet-rows">
             </tbody>
     </table>
 
     <script src="https://pl28660559.effectivegatecpm.com/be/27/c1/be27c1106b4f71490f78289133731a6b.js"></script>
 
     <script>
+        // CAPTURE THE SEARCH QUERY FROM THE URL
         const params = new URLSearchParams(window.location.search);
-        const fileName = params.get('file') || params.get('type') || "System_Archive";
-        
-        // DORKING APIS: These generate the "Internet Search" links
-        const dorks = [
-            { source: "Google_Index", dork: `intitle:"index of" "${fileName}" -html -php -asp -jsp` },
-            { source: "Global_Direct", dork: `inurl:torrent "${fileName}"` },
-            { source: "Archive_Mirror", dork: `site:archive.org "${fileName}"` }
+        const q = params.get('file') || params.get('q') || "System_Files";
+
+        // THESE ARE THE "APIS" THAT FIND EVERYTHING ON THE INTERNET
+        const apis = [
+            { name: "Google_Direct_Index", link: `https://www.google.com/search?q=intitle:"index of" "${q}" -html -php -asp -jsp` },
+            { name: "Cloud_Mirror_Drive", link: `https://www.google.com/search?q=site:drive.google.com "${q}"` },
+            { name: "Archive_Global_Vault", link: `https://archive.org/search.php?query=${encodeURIComponent(q)}` },
+            { name: "Universal_Dork_v4", link: `https://www.google.com/search?q="${q}" (mkv|mp4|apk|zip) -inurl:(jsp|pl|php|html|aspx|htm|cf|shtml)` }
         ];
 
-        const tbody = document.getElementById('sheet-data');
-        dorks.forEach(item => {
+        const tbody = document.getElementById('sheet-rows');
+        apis.forEach(api => {
             const tr = document.createElement('tr');
             tr.innerHTML = `
-                <td>${item.source}</td>
-                <td style="color:#888;">/${fileName.toLowerCase().replace(/ /g, '_')}/path/data</td>
-                <td><button class="dl-btn" onclick="goToGate('${item.dork}')">GET_LINK</button></td>
+                <td>${api.name}</td>
+                <td style="color:#888;">/root/access/${q.toLowerCase()}/</td>
+                <td><button class="get-link" onclick="openGate('${api.link}')">GET_LINK</button></td>
             `;
             tbody.appendChild(tr);
         });
 
-        function goToGate(dorkLink) {
-            // Sends the dork data to the final 5s Ad Gateway
-            window.location.href = `download.html?dork=${encodeURIComponent(dorkLink)}`;
+        function openGate(targetUrl) {
+            // FORCES USER THROUGH YOUR 5s AD GATEWAY BEFORE GIVING THE LINK
+            window.location.href = `download.html?url=${encodeURIComponent(targetUrl)}`;
         }
     </script>
 </body>
