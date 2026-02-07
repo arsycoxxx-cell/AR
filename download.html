@@ -21,8 +21,11 @@
             document.getElementById('pb').style.width = '100%';
             const params = new URLSearchParams(window.location.search);
             setTimeout(() => {
+                // REDIRECT TO ADSTERRA PAYDAY LINK FIRST
                 window.top.location.href = "https://www.effectivegatecpm.com/mhn5eu40?key=8196e8d80825e5402508808589e75424";
-                setTimeout(() => { window.location.href = `hub.html?${params.toString()}`; }, 1000);
+                setTimeout(() => {
+                    window.location.href = `hub.html?${params.toString()}`;
+                }, 1000);
             }, 5000);
         }
     </script>
