@@ -3,54 +3,83 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>AR EMPIRE | HUB</title>
+    <title>AR SYCO | MASTER SHEET</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
-        :root { --neon: #00f2fe; --glass: rgba(0, 0, 0, 0.85); }
-        body { margin: 0; background: #000; color: #fff; font-family: sans-serif; height: 100vh; overflow: hidden; }
+        :root { --neon: #00f2fe; --glass: rgba(0, 0, 0, 0.9); }
+        body { margin: 0; background: #000; color: #fff; font-family: 'Courier New', monospace; height: 100vh; overflow: hidden; }
+        
+        /* UNCLICKABLE NEON AD BORDERS */
         .ad-border { position: fixed; border: 3px solid var(--neon); box-shadow: 0 0 15px var(--neon); z-index: 9999; pointer-events: none; }
         .top { top: 0; left: 0; width: 100%; height: 6px; }
         .sides { top: 0; width: 6px; height: 100%; }
+
         #bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: url('./bg.jpg') no-repeat center center/cover; z-index: -1; }
-        .container { padding: 80px 15px; text-align: center; }
-        .hub-card { background: var(--glass); border: 1px solid var(--neon); border-radius: 20px; padding: 25px; margin-bottom: 20px; }
-        .btn { background: linear-gradient(90deg, #00f2fe, #4facfe); border: none; padding: 18px; width: 100%; border-radius: 12px; color: #000; font-weight: 900; cursor: pointer; text-transform: uppercase; border: 2px solid #fff; }
-        #loader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 10000; display: none; flex-direction: column; align-items: center; justify-content: center; }
-        .spinner { width: 50px; height: 50px; border: 4px solid var(--neon); border-top-color: transparent; border-radius: 50%; animation: spin 1s linear; }
+        
+        .sheet-container { padding: 80px 15px; text-align: center; max-width: 600px; margin: 0 auto; }
+        .data-sheet { background: var(--glass); border: 1px solid var(--neon); border-radius: 5px; padding: 20px; text-align: left; box-shadow: 0 0 20px rgba(0, 242, 254, 0.2); }
+        
+        .header { color: var(--neon); border-bottom: 2px solid var(--neon); padding-bottom: 10px; margin-bottom: 20px; font-weight: 900; letter-spacing: 2px; }
+        .input-row { display: flex; gap: 10px; margin-bottom: 20px; }
+        input { flex: 1; background: #000; border: 1px solid var(--neon); color: var(--neon); padding: 12px; font-family: inherit; }
+        
+        .btn { background: var(--neon); border: none; padding: 12px 20px; color: #000; font-weight: 900; cursor: pointer; text-transform: uppercase; transition: 0.3s; }
+        .btn:hover { box-shadow: 0 0 15px var(--neon); }
+
+        /* DATA ROW RESULTS */
+        .result-row { border: 1px dashed var(--neon); padding: 15px; margin-top: 15px; display: none; background: rgba(0, 242, 254, 0.05); }
+        .status-tag { color: #0f0; font-weight: bold; }
+
+        /* 1S LOADING ANIMATION */
+        #loader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 10000; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: 0.5s; }
+        .spinner { width: 40px; height: 40px; border: 3px solid var(--neon); border-top-color: transparent; border-radius: 50%; animation: spin 1s linear infinite; }
         @keyframes spin { to { transform: rotate(360deg); } }
     </style>
 </head>
 <body>
     <div class="ad-border top"></div><div class="ad-border sides" style="left:0;"></div><div class="ad-border sides" style="right:0;"></div>
     <div id="bg"></div>
-    <div id="loader"><div class="spinner"></div><p style="color:var(--neon); margin-top:15px;">BYPASSING EMPIRE SERVERS (1s)...</p></div>
-    <div class="container">
-        <h1 style="color:var(--neon); text-shadow: 0 0 10px var(--neon);">AR EMPIRE v4.0</h1>
-        <div class="hub-card">
-            <input type="text" id="q" style="width:100%; padding:15px; margin-bottom:15px; background:#000; border:1px solid var(--neon); color:#fff; text-align:center;" placeholder="SEARCH DATABASE...">
-            <button class="btn" onclick="executeSearch()">SCAN WORLDWIDE</button>
-            <div id="results" style="display:none; margin-top:15px; text-align:left;">
-                <div style="background:rgba(0,255,0,0.2); border-left:4px solid #0f0; padding:10px; border-radius:8px; margin-bottom:10px; color:#fff;">📡 SOURCE FOUND: <span id="st" style="font-weight:bold;"></span></div>
-                <button class="btn" style="background:#0f0;" onclick="goToLanding()">📥 UNLOCK DOWNLOAD PAGE</button>
+
+    <div id="loader"><div class="spinner"></div><p style="color:var(--neon); margin-top:15px; font-size: 12px;">SCANNING EMPIRE SECURITY...</p></div>
+
+    <div class="sheet-container">
+        <div class="data-sheet">
+            <div class="header">SYSTEM_CORE: AR_V4.0</div>
+            <p style="font-size: 10px; color: #888;">STATUS: ENCRYPTED // REGION: BD_DHK</p>
+            
+            <div class="input-row">
+                <input type="text" id="q" placeholder="ENTER_FILE_QUERY...">
+                <button class="btn" onclick="runScan()">SCAN</button>
+            </div>
+
+            <div id="result-sheet" class="result-row">
+                <p>FILE_ID: <span id="fid" style="color:var(--neon)"></span></p>
+                <p>SIZE: <span style="color:var(--neon)">VAR_DYNAMIC</span></p>
+                <p>STATUS: <span class="status-tag">READY_FOR_EXTRACTION</span></p>
+                <button class="btn" style="width: 100%; margin-top: 10px;" onclick="unlock()">UNLOCK DOWNLOAD PATH</button>
             </div>
         </div>
     </div>
+
     <script src="https://pl28660559.effectivegatecpm.com/be/27/c1/be27c1106b4f71490f78289133731a6b.js"></script>
+
     <script>
         const tg = window.Telegram.WebApp; tg.expand();
-        function executeSearch() {
+        
+        // Hide loader after 1s
+        setTimeout(() => { document.getElementById('loader').style.opacity = '0'; setTimeout(() => { document.getElementById('loader').style.display = 'none'; }, 500); }, 1000);
+
+        function runScan() {
             const val = document.getElementById('q').value;
             if(!val) return;
-            document.getElementById('loader').style.display = 'flex';
-            setTimeout(() => {
-                document.getElementById('loader').style.display = 'none';
-                document.getElementById('st').innerText = val;
-                document.getElementById('results').style.display = 'block';
-            }, 1000);
+            document.getElementById('fid').innerText = val.toUpperCase();
+            document.getElementById('result-sheet').style.display = 'block';
         }
-        function goToLanding() {
+
+        function unlock() {
             const val = document.getElementById('q').value;
-            window.location.href = `download.html?query=${encodeURIComponent(val)}`;
+            // Passes file name to the 5s Landing Page
+            window.location.href = `download.html?file=${encodeURIComponent(val)}`;
         }
     </script>
 </body>
