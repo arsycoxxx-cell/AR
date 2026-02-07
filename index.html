@@ -2,36 +2,35 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AR EMPIRE | HUB</title>
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         :root { --neon: #00f2fe; --glass: rgba(0, 0, 0, 0.85); }
         body { margin: 0; background: #000; color: #fff; font-family: monospace; height: 100vh; overflow: hidden; }
         #bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: url('./bg.jpg') no-repeat center center/cover; z-index: -1; }
         .ad-border { position: fixed; border: 3px solid var(--neon); top:0; left:0; right:0; bottom:0; z-index: 9999; pointer-events: none; box-shadow: 0 0 15px var(--neon); }
-        .container { padding: 80px 15px; text-align: center; max-width: 500px; margin: 0 auto; }
-        .card { background: var(--glass); border: 1px solid var(--neon); border-radius: 10px; padding: 25px; }
+        .container { padding: 80px 15px; text-align: center; }
+        .card { background: var(--glass); border: 1px solid var(--neon); padding: 25px; border-radius: 10px; }
         input { width: 100%; background: #000; border: 1px solid var(--neon); color: var(--neon); padding: 15px; margin-bottom: 15px; box-sizing: border-box; }
         .btn { background: var(--neon); border: none; padding: 15px; width: 100%; color: #000; font-weight: 900; cursor: pointer; text-transform: uppercase; }
+        #loader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 10000; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        .spinner { width: 40px; height: 40px; border: 3px solid var(--neon); border-top-color: transparent; border-radius: 50%; animation: spin 1s linear; }
+        @keyframes spin { to { transform: rotate(360deg); } }
     </style>
 </head>
 <body>
     <div class="ad-border"></div><div id="bg"></div>
-    <div class="container">
-        <div class="card">
-            <h2 style="color:var(--neon); letter-spacing: 3px; border-bottom: 2px solid var(--neon); padding-bottom: 10px;">GLOBAL_SCANNER</h2>
-            <input type="text" id="q" placeholder="SEARCH ALL HUBS...">
-            <button class="btn" onclick="next()">START SCAN</button>
-        </div>
-    </div>
+    <div id="loader"><div class="spinner"></div><p style="color:var(--neon); margin-top:15px; font-size: 10px;">SCANNING CORE_v4.0...</p></div>
+    <div class="container"><div class="card">
+        <h2 style="color:var(--neon); letter-spacing: 3px;">GLOBAL_SCANNER</h2>
+        <input type="text" id="q" placeholder="ENTER FILE NAME..."><button class="btn" onclick="next()">START SCAN</button>
+    </div></div>
     <script src="https://pl28660559.effectivegatecpm.com/be/27/c1/be27c1106b4f71490f78289133731a6b.js"></script>
     <script>
-        const tg = window.Telegram.WebApp; tg.expand();
+        setTimeout(() => { document.getElementById('loader').style.display = 'none'; }, 1000);
         function next() {
             const val = document.getElementById('q').value;
-            if(!val) return;
-            window.location.href = `sheet.html?q=${encodeURIComponent(val)}`;
+            if(val) window.location.href = `sheet.html?q=${encodeURIComponent(val)}`;
         }
     </script>
 </body>
