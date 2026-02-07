@@ -2,44 +2,30 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AR EMPIRE | GATEWAY</title>
     <style>
-        :root { --neon: #00f2fe; }
-        body { background: #000; color: var(--neon); display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; font-family: 'Courier New', monospace; text-align: center; margin: 0; overflow: hidden; }
-        
-        /* UNCLICKABLE NEON BORDER */
-        .ad-border { position: fixed; border: 3px solid var(--neon); top:0; left:0; right:0; bottom:0; z-index: 9999; pointer-events: none; box-shadow: 0 0 15px var(--neon); }
-        
-        .p-box { width: 80%; background: #111; border: 1px solid var(--neon); height: 12px; margin: 20px 0; overflow: hidden; }
-        .p-bar { height: 100%; background: var(--neon); width: 0%; transition: width 5s linear; }
-        h2 { letter-spacing: 5px; text-transform: uppercase; }
+        body { background: #000; color: #00f2fe; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; font-family: monospace; text-align: center; }
+        #bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: url('./bg.jpg') no-repeat center center/cover; opacity: 0.4; z-index: -1; }
+        .p-box { width: 80%; background: #111; border: 1px solid #00f2fe; height: 12px; margin: 20px 0; overflow: hidden; }
+        .p-bar { height: 100%; background: #00f2fe; width: 0%; transition: width 5s linear; }
     </style>
 </head>
 <body>
-    <div class="ad-border"></div>
-    <h2>Bypassing_Security</h2>
+    <div id="bg"></div>
+    <h2>VERIFYING_SUBSCRIBE</h2>
     <div class="p-box"><div class="p-bar" id="pb"></div></div>
-    <p>GENERATING HIGH-SPEED MIRROR (5s)...</p>
-
+    <p>GENERATING HUB ACCESS (5s)...</p>
     <script src="https://pl28660559.effectivegatecpm.com/be/27/c1/be27c1106b4f71490f78289133731a6b.js"></script>
-
     <script>
         window.onload = function() {
-            const pb = document.getElementById('pb');
+            document.getElementById('pb').style.width = '100%';
             const params = new URLSearchParams(window.location.search);
-            const dorkUrl = params.get('url'); // Captures the internet link from sheet.html
-
-            // Start 5s Animation
-            setTimeout(() => { pb.style.width = '100%'; }, 100);
-
             setTimeout(() => {
-                // REDIRECT TO ADSTERRA PAYDAY LINK FIRST
                 window.top.location.href = "https://www.effectivegatecpm.com/mhn5eu40?key=8196e8d80825e5402508808589e75424";
-                
-                // If they close the ad, they can manually use the dork link:
-                // window.location.href = dorkUrl; 
-            }, 5000); 
+                setTimeout(() => {
+                    window.location.href = `hub.html?${params.toString()}`;
+                }, 1000);
+            }, 5000);
         }
     </script>
 </body>
