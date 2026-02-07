@@ -1,34 +1,42 @@
-import os
-import telebot
-from flask import Flask, request
+import os, telebot, requests, time, threading
+from flask import Flask
 
-# IDENTITY DATA
-API_TOKEN = '8503812037:AAFu6zCSez0ro9NIFJX65v2r_9MvLEiDbgQ' 
+# CREDENTIALS
+API_TOKEN = '8503812037:AAFu6zCSez0ro9NIFJX65v2r_9MvLEiDbgQ'
+TMDB_API = '19241042e5671d4369263a2b6f8e7ff5'
+CHANNEL_ID = "@ar_downloader"
+HUB_BASE = "https://arsycoxxx-cell.github.io/AR/index.html"
+
 bot = telebot.TeleBot(API_TOKEN)
 server = Flask(__name__)
 
-ADMIN_ID = 1179345537
-CHANNEL_ID = "@ar_downloader" 
-HUB_URL = "https://arsycoxxx-cell.github.io/AR/index.html"
+def get_trending():
+    url = f"https://api.themoviedb.org/3/trending/all/day?api_key={TMDB_API}"
+    return requests.get(url).json().get('results', [])
 
-@bot.message_handler(commands=['start'])
-def start(message):
-    # Greeting as AR Syco
-    text = "SYSTEM_ACCESS: AR Syco v4.0. Join @ar_downloader to unlock the Master Sheet."
-    markup = telebot.types.InlineKeyboardMarkup()
-    markup.add(telebot.types.InlineKeyboardButton("📢 JOIN CHANNEL", url="https://t.me/ar_downloader"))
-    bot.send_message(message.chat.id, text, reply_markup=markup)
-
-@server.route('/' + API_TOKEN, methods=['POST'])
-def getMessage():
-    bot.process_new_updates([telebot.types.Update.de_json(request.stream.read().decode("utf-8"))])
-    return "!", 200
+def auto_poster():
+    time.sleep(10) # Start after 10s deployment
+    while True:
+        items = get_trending()
+        for item in items:
+            title = item.get('title') or item.get('name')
+            # Physical 4-Stage Bridge: User clicks this and goes to ads
+            gate_link = f"{HUB_BASE}?q={title.replace(' ', '+')}"
+            
+            post = (f"✨ **NEW RELEASE FOUND** ✨\n\n"
+                    f"🎬 **{title}**\n\n"
+                    f"📥 **DOWNLOAD BELOW:**\n{gate_link}")
+            
+            try:
+                bot.send_message(CHANNEL_ID, post, parse_mode="Markdown")
+            except Exception as e:
+                print(f"Error: {e}")
+            time.sleep(3600) # Post every hour
 
 @server.route("/")
 def webhook():
-    bot.remove_webhook()
-    bot.set_webhook(url='https://ar-9yvx.onrender.com/' + API_TOKEN) #
     return "AR_EMPIRE_LIVE", 200
 
 if __name__ == "__main__":
-    server.run(host="0.0.0.0", port=int(os.environ.get('PORT', 10000))) #
+    threading.Thread(target=auto_poster).start()
+    server.run(host="0.0.0.0", port=int(os.environ.get('PORT', 10000)))
