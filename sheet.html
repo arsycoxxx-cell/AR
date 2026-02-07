@@ -1,7 +1,11 @@
-<script src="https://pl28660559.effectivegatecpm.com/be/27/c1/be27c1106b4f71490f78289133731a6b.js"></script>
-<script>
-    function getLink(target) {
-        // Physical Connection to Download Gate
-        window.location.href = `download.html?url=${encodeURIComponent(target)}`;
-    }
-</script>
+<body style="background:url('bg.jpg') center/cover; color:#fff; font-family:monospace;">
+    <script src="https://pl28660559.effectivegatecpm.com/be/27/c1/be27c1106b4f71490f78289133731a6b.js"></script>
+    <h2 style="text-align:center; color:#00f2fe;">AR_MASTER_SHEET</h2>
+    <div id="results"></div>
+    <script>
+        function getLink(url) {
+            const q = new URLSearchParams(window.location.search).get('q');
+            window.location.href = `download.html?url=${encodeURIComponent(url)}&name=${q}`;
+        }
+    </script>
+</body>
