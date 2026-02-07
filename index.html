@@ -3,35 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>AR SYCO | MASTER SHEET</title>
+    <title>AR EMPIRE | GLOBAL HUB</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
-        :root { --neon: #00f2fe; --glass: rgba(0, 0, 0, 0.9); }
-        body { margin: 0; background: #000; color: #fff; font-family: 'Courier New', monospace; height: 100vh; overflow: hidden; }
+        :root { --neon: #00f2fe; --glass: rgba(0, 0, 0, 0.95); }
+        body { margin: 0; background: #000; color: #fff; font-family: 'Courier New', monospace; height: 100vh; overflow-y: auto; }
         
-        /* UNCLICKABLE NEON AD BORDERS */
+        /* UNCLICKABLE HIGH-CPM AD BORDERS */
         .ad-border { position: fixed; border: 3px solid var(--neon); box-shadow: 0 0 15px var(--neon); z-index: 9999; pointer-events: none; }
         .top { top: 0; left: 0; width: 100%; height: 6px; }
         .sides { top: 0; width: 6px; height: 100%; }
 
         #bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: url('./bg.jpg') no-repeat center center/cover; z-index: -1; }
         
-        .sheet-container { padding: 80px 15px; text-align: center; max-width: 600px; margin: 0 auto; }
-        .data-sheet { background: var(--glass); border: 1px solid var(--neon); border-radius: 5px; padding: 20px; text-align: left; box-shadow: 0 0 20px rgba(0, 242, 254, 0.2); }
+        .container { padding: 80px 15px 120px; text-align: center; max-width: 500px; margin: 0 auto; }
+        .hub-card { background: var(--glass); border: 1px solid var(--neon); border-radius: 15px; padding: 20px; margin-bottom: 20px; box-shadow: 0 0 20px rgba(0, 242, 254, 0.3); }
         
-        .header { color: var(--neon); border-bottom: 2px solid var(--neon); padding-bottom: 10px; margin-bottom: 20px; font-weight: 900; letter-spacing: 2px; }
-        .input-row { display: flex; gap: 10px; margin-bottom: 20px; }
-        input { flex: 1; background: #000; border: 1px solid var(--neon); color: var(--neon); padding: 12px; font-family: inherit; }
-        
-        .btn { background: var(--neon); border: none; padding: 12px 20px; color: #000; font-weight: 900; cursor: pointer; text-transform: uppercase; transition: 0.3s; }
-        .btn:hover { box-shadow: 0 0 15px var(--neon); }
+        input { width: 100%; background: #000; border: 1px solid var(--neon); color: var(--neon); padding: 15px; margin-bottom: 15px; box-sizing: border-box; font-family: inherit; font-size: 16px; }
+        .btn { background: var(--neon); border: none; padding: 15px; width: 100%; color: #000; font-weight: 900; cursor: pointer; text-transform: uppercase; margin-bottom: 5px; }
 
-        /* DATA ROW RESULTS */
-        .result-row { border: 1px dashed var(--neon); padding: 15px; margin-top: 15px; display: none; background: rgba(0, 242, 254, 0.05); }
-        .status-tag { color: #0f0; font-weight: bold; }
-
-        /* 1S LOADING ANIMATION */
-        #loader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 10000; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: 0.5s; }
+        /* 1S BOOT ANIMATION */
+        #loader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 10000; display: flex; flex-direction: column; align-items: center; justify-content: center; }
         .spinner { width: 40px; height: 40px; border: 3px solid var(--neon); border-top-color: transparent; border-radius: 50%; animation: spin 1s linear infinite; }
         @keyframes spin { to { transform: rotate(360deg); } }
     </style>
@@ -40,24 +32,27 @@
     <div class="ad-border top"></div><div class="ad-border sides" style="left:0;"></div><div class="ad-border sides" style="right:0;"></div>
     <div id="bg"></div>
 
-    <div id="loader"><div class="spinner"></div><p style="color:var(--neon); margin-top:15px; font-size: 12px;">SCANNING EMPIRE SECURITY...</p></div>
+    <div id="loader"><div class="spinner"></div><p style="color:var(--neon); margin-top:15px; font-size: 10px;">SCANNING CORE_v4.0...</p></div>
 
-    <div class="sheet-container">
-        <div class="data-sheet">
-            <div class="header">SYSTEM_CORE: AR_V4.0</div>
-            <p style="font-size: 10px; color: #888;">STATUS: ENCRYPTED // REGION: BD_DHK</p>
-            
-            <div class="input-row">
-                <input type="text" id="q" placeholder="ENTER_FILE_QUERY...">
-                <button class="btn" onclick="runScan()">SCAN</button>
-            </div>
+    <div class="container">
+        <h1 style="color:var(--neon); text-shadow: 0 0 10px var(--neon); letter-spacing: 3px;">AR_SYCO_SYSTEM</h1>
 
-            <div id="result-sheet" class="result-row">
-                <p>FILE_ID: <span id="fid" style="color:var(--neon)"></span></p>
-                <p>SIZE: <span style="color:var(--neon)">VAR_DYNAMIC</span></p>
-                <p>STATUS: <span class="status-tag">READY_FOR_EXTRACTION</span></p>
-                <button class="btn" style="width: 100%; margin-top: 10px;" onclick="unlock()">UNLOCK DOWNLOAD PATH</button>
-            </div>
+        <div class="hub-card">
+            <h3 style="color:var(--neon); margin-top:0;">🔍 UNIVERSAL_SCANNER</h3>
+            <input type="text" id="q" placeholder="ENTER_FILE_NAME (Movies, APKs, Files)">
+            <button class="btn" onclick="executeUniversalSearch()">SCAN ALL SERVERS</button>
+        </div>
+
+        <div class="hub-card">
+            <h3 style="color:var(--neon); margin-top:0;">🎬 MEDIA_HUBS</h3>
+            <button class="btn" style="background:rgba(255,255,255,0.1); color:#fff;" onclick="toSheet('Movies')">MOVIE_INDEX</button>
+            <button class="btn" style="background:rgba(255,255,255,0.1); color:#fff;" onclick="toSheet('Anime')">ANIME_INDEX</button>
+        </div>
+
+        <div class="hub-card">
+            <h3 style="color:var(--neon); margin-top:0;">🛠 UTILITY_SERVICES</h3>
+            <button class="btn" style="background:rgba(255,255,255,0.1); color:#fff;" onclick="toSheet('Premium APK')">PREMIUM_APK</button>
+            <button class="btn" style="background:rgba(255,255,255,0.1); color:#fff;" onclick="toSheet('Download Service')">LINK_BYPASS</button>
         </div>
     </div>
 
@@ -65,23 +60,19 @@
 
     <script>
         const tg = window.Telegram.WebApp; tg.expand();
-        
-        // Hide loader after 1s
-        setTimeout(() => { document.getElementById('loader').style.opacity = '0'; setTimeout(() => { document.getElementById('loader').style.display = 'none'; }, 500); }, 1000);
+        setTimeout(() => { document.getElementById('loader').style.display = 'none'; }, 1000);
 
-        function runScan() {
-            const val = document.getElementById('q').value;
-            if(!val) return;
-            document.getElementById('fid').innerText = val.toUpperCase();
-            document.getElementById('result-sheet').style.display = 'block';
+        function executeUniversalSearch() {
+            const query = document.getElementById('q').value;
+            if(!query) return;
+            // Passes the search query to the Master Sheet logic
+            window.location.href = `sheet.html?file=${encodeURIComponent(query)}&type=Global`;
         }
 
-        function unlock() {
-            const val = document.getElementById('q').value;
-            // Passes file name to the 5s Landing Page
-            window.location.href = `download.html?file=${encodeURIComponent(val)}`;
+        function toSheet(type) {
+            // Sends user to the Master Sheet with a pre-set category
+            window.location.href = `sheet.html?type=${encodeURIComponent(type)}`;
         }
     </script>
 </body>
-</html> 
- 
+</html>
