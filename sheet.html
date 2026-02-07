@@ -2,38 +2,38 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>AR EMPIRE | DATA SHEET</title>
+    <title>AR EMPIRE | MASTER SHEET</title>
     <style>
         body { background: #000; color: #fff; font-family: monospace; padding: 20px; }
         #bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: url('./bg.jpg') no-repeat center center/cover; opacity: 0.3; z-index: -1; }
         .table { width: 100%; border-collapse: collapse; border: 1px solid #00f2fe; background: rgba(0,0,0,0.8); }
         th, td { border: 1px solid #00f2fe; padding: 12px; font-size: 11px; }
-        th { color: #00f2fe; text-transform: uppercase; background: #111; }
-        .dl-btn { background: #0f0; color: #000; padding: 10px; border: none; font-weight: bold; cursor: pointer; text-transform: uppercase; width: 100%; }
+        th { color: #00f2fe; background: #111; text-transform: uppercase; }
+        .dl-btn { background: #0f0; color: #000; padding: 10px; border: none; font-weight: bold; cursor: pointer; width: 100%; }
     </style>
 </head>
 <body>
     <div id="bg"></div>
     <h2 style="color:#00f2fe; text-align:center;">MASTER_DATA_SHEET</h2>
     <table class="table">
-        <thead><tr><th>SOURCE</th><th>INDEX_PATH</th><th>ACTION</th></tr></thead>
+        <thead><tr><th>SOURCE</th><th>PATH</th><th>ACTION</th></tr></thead>
         <tbody id="rows"></tbody>
     </table>
     <script src="https://pl28660559.effectivegatecpm.com/be/27/c1/be27c1106b4f71490f78289133731a6b.js"></script>
     <script>
         const params = new URLSearchParams(window.location.search);
-        const q = params.get('q') || "System_Files";
+        const q = params.get('q') || "Files";
         const apis = [
             { n: "Google_Index", u: `https://www.google.com/search?q=intitle:"index of" "${q}"` },
-            { n: "Cloud_Mirror", u: `https://www.google.com/search?q=site:drive.google.com "${q}"` }
+            { n: "Direct_Dork", u: `https://www.google.com/search?q="${q}" (mkv|mp4|apk|zip)` }
         ];
         const tbody = document.getElementById('rows');
         apis.forEach(api => {
             const tr = document.createElement('tr');
-            tr.innerHTML = `<td>${api.n}</td><td>/root/${q}/</td><td><button class="dl-btn" onclick="next('${api.u}')">GET_LINK</button></td>`;
+            tr.innerHTML = `<td>${api.n}</td><td style="color:#666;">/path/${q}/data</td><td><button class="dl-btn" onclick="nextStage('${api.u}')">GET_LINK</button></td>`;
             tbody.appendChild(tr);
         });
-        function next(url) {
+        function nextStage(url) {
             window.location.href = `download.html?url=${encodeURIComponent(url)}&name=${encodeURIComponent(q)}`;
         }
     </script>
