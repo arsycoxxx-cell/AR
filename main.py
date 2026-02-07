@@ -15,23 +15,17 @@ def get_trending():
     return requests.get(url).json().get('results', [])
 
 def auto_poster():
-    time.sleep(10) # Start after 10s deployment
+    time.sleep(10) # 10s Delay after deploy
     while True:
         items = get_trending()
         for item in items:
             title = item.get('title') or item.get('name')
-            # Physical 4-Stage Bridge: User clicks this and goes to ads
             gate_link = f"{HUB_BASE}?q={title.replace(' ', '+')}"
-            
-            post = (f"✨ **NEW RELEASE FOUND** ✨\n\n"
-                    f"🎬 **{title}**\n\n"
-                    f"📥 **DOWNLOAD BELOW:**\n{gate_link}")
-            
+            post = f"✨ **NEW RELEASE FOUND** ✨\n\n🎬 **{title}**\n\n📥 **DOWNLOAD BELOW:**\n{gate_link}"
             try:
                 bot.send_message(CHANNEL_ID, post, parse_mode="Markdown")
-            except Exception as e:
-                print(f"Error: {e}")
-            time.sleep(3600) # Post every hour
+            except: pass
+            time.sleep(3600)
 
 @server.route("/")
 def webhook():
