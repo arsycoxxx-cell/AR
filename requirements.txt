@@ -1,2 +1,5 @@
 python-telegram-bot[job-queue]
 requests
+pyTelegramBotAPI
+flask
+requests
