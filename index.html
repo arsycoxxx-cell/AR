@@ -8,18 +8,13 @@
     <style>
         :root { --neon: #00f2fe; --glass: rgba(0, 0, 0, 0.85); }
         body { margin: 0; background: #000; color: #fff; font-family: sans-serif; height: 100vh; overflow: hidden; }
-        
-        /* UNCLICKABLE NEON AD BORDERS (HIGH CPM) */
         .ad-border { position: fixed; border: 3px solid var(--neon); box-shadow: 0 0 15px var(--neon); z-index: 9999; pointer-events: none; }
         .top { top: 0; left: 0; width: 100%; height: 6px; }
         .sides { top: 0; width: 6px; height: 100%; }
-
-        #bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: url('./bg.jpg') no-repeat center center/cover; filter: none !important; z-index: -1; }
+        #bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: url('./bg.jpg') no-repeat center center/cover; z-index: -1; }
         .container { padding: 80px 15px; text-align: center; }
         .hub-card { background: var(--glass); border: 1px solid var(--neon); border-radius: 20px; padding: 25px; margin-bottom: 20px; }
         .btn { background: linear-gradient(90deg, #00f2fe, #4facfe); border: none; padding: 18px; width: 100%; border-radius: 12px; color: #000; font-weight: 900; cursor: pointer; text-transform: uppercase; border: 2px solid #fff; }
-
-        /* 1S OPENING ANIMATION (CPM TRIGGER) */
         #loader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 10000; display: none; flex-direction: column; align-items: center; justify-content: center; }
         .spinner { width: 50px; height: 50px; border: 4px solid var(--neon); border-top-color: transparent; border-radius: 50%; animation: spin 1s linear; }
         @keyframes spin { to { transform: rotate(360deg); } }
@@ -29,31 +24,22 @@
     <div class="ad-border top"></div><div class="ad-border sides" style="left:0;"></div><div class="ad-border sides" style="right:0;"></div>
     <div id="bg"></div>
     <div id="loader"><div class="spinner"></div><p style="color:var(--neon); margin-top:15px;">BYPASSING EMPIRE SERVERS (1s)...</p></div>
-
     <div class="container">
         <h1 style="color:var(--neon); text-shadow: 0 0 10px var(--neon);">AR EMPIRE v4.0</h1>
         <div class="hub-card">
-            <input type="text" id="q" style="width:100%; padding:15px; margin-bottom:15px; background:#000; border:1px solid var(--neon); color:#fff; text-align:center; font-size: 16px;" placeholder="SEARCH ANYTHING...">
+            <input type="text" id="q" style="width:100%; padding:15px; margin-bottom:15px; background:#000; border:1px solid var(--neon); color:#fff; text-align:center;" placeholder="SEARCH DATABASE...">
             <button class="btn" onclick="executeSearch()">SCAN WORLDWIDE</button>
-            <div id="results" style="display:none; margin-top:15px;">
-                <div style="background:rgba(0,255,0,0.2); padding:10px; border-radius:8px; border-left:4px solid #0f0; margin-bottom:10px; color:#fff;">📡 SOURCE FOUND: <span id="st" style="font-weight:bold;"></span></div>
+            <div id="results" style="display:none; margin-top:15px; text-align:left;">
+                <div style="background:rgba(0,255,0,0.2); border-left:4px solid #0f0; padding:10px; border-radius:8px; margin-bottom:10px; color:#fff;">📡 SOURCE FOUND: <span id="st" style="font-weight:bold;"></span></div>
                 <button class="btn" style="background:#0f0;" onclick="goToLanding()">📥 UNLOCK DOWNLOAD PAGE</button>
             </div>
         </div>
     </div>
-
     <script src="https://pl28660559.effectivegatecpm.com/be/27/c1/be27c1106b4f71490f78289133731a6b.js"></script>
-
     <script>
         const tg = window.Telegram.WebApp; tg.expand();
-
-        // SEARCH LISTENER FIX: Captures query in a global variable
-        document.getElementById('q').addEventListener('input', function() {
-            window.lastSearch = this.value;
-        });
-
         function executeSearch() {
-            const val = window.lastSearch || document.getElementById('q').value;
+            const val = document.getElementById('q').value;
             if(!val) return;
             document.getElementById('loader').style.display = 'flex';
             setTimeout(() => {
@@ -62,11 +48,11 @@
                 document.getElementById('results').style.display = 'block';
             }, 1000);
         }
-
         function goToLanding() {
-            const val = window.lastSearch || document.getElementById('q').value;
+            const val = document.getElementById('q').value;
             window.location.href = `download.html?query=${encodeURIComponent(val)}`;
         }
     </script>
 </body>
-</html>
+</html> 
+ 
