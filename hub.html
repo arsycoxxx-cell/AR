@@ -22,7 +22,7 @@
     <script>
         const params = new URLSearchParams(window.location.search);
         const url = params.get('url');
-        document.getElementById('fn').innerText = params.get('name') || "Extracted_Link";
+        document.getElementById('fn').innerText = params.get('name') || "System_Link";
         if(url) {
             document.getElementById('direct').href = url;
             document.getElementById('chrome').href = `intent:${url}#Intent;scheme=http;package=com.android.chrome;end`;
