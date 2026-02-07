@@ -4,25 +4,28 @@
     <meta charset="UTF-8">
     <title>AR EMPIRE | GATEWAY</title>
     <style>
-        body { background: #000; color: #00f2fe; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; font-family: sans-serif; text-align: center; overflow: hidden; }
-        .p-box { width: 80%; background: #111; border: 1px solid #00f2fe; height: 10px; border-radius: 10px; margin: 20px 0; overflow: hidden; }
+        body { background: #000; color: #00f2fe; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; font-family: 'Courier New', monospace; text-align: center; }
+        .p-box { width: 80%; background: #111; border: 1px solid #00f2fe; height: 12px; border-radius: 2px; margin: 20px 0; overflow: hidden; }
         .p-bar { height: 100%; background: #00f2fe; width: 0%; transition: width 5s linear; }
+        .neon-line { width: 100%; height: 1px; background: #00f2fe; box-shadow: 0 0 10px #00f2fe; margin: 30px 0; pointer-events: none; }
     </style>
 </head>
 <body>
-    <h2>SECURITY VERIFICATION (5s)</h2>
+    <div class="neon-line"></div>
+    <h2 style="letter-spacing: 5px;">VERIFYING_MEMBERSHIP</h2>
     <div class="p-box"><div class="p-bar" id="pb"></div></div>
-    <p>GENERATING HIGH-SPEED MIRROR (5s)...</p>
-    <b id="fn" style="color:#fff;"></b>
+    <p id="msg">INITIALIZING BYPASS SEQUENCE (5s)...</p>
+    <div class="neon-line"></div>
+
     <script src="https://pl28660559.effectivegatecpm.com/be/27/c1/be27c1106b4f71490f78289133731a6b.js"></script>
+
     <script>
         window.onload = function() {
-            const params = new URLSearchParams(window.location.search);
-            document.getElementById('fn').innerText = params.get('query') || "";
             document.getElementById('pb').style.width = '100%';
             setTimeout(() => {
+                // REDIRECT TO YOUR ADSTERRA PAYDAY LINK
                 window.location.href = "https://www.effectivegatecpm.com/mhn5eu40?key=8196e8d80825e5402508808589e75424";
-            }, 5000);
+            }, 5000); // 5S DURATION FOR MAX CPM
         }
     </script>
 </body>
