@@ -1,34 +1,10 @@
-import os, telebot, requests, time, threading
-from flask import Flask
-
-# CREDENTIALS
-API_TOKEN = '8503812037:AAFu6zCSez0ro9NIFJX65v2r_9MvLEiDbgQ'
-TMDB_API = '19241042e5671d4369263a2b6f8e7ff5'
-CHANNEL_ID = "@ar_downloader"
-HUB_BASE = "https://arsycoxxx-cell.github.io/AR/index.html"
-bot = telebot.TeleBot(API_TOKEN)
-server = Flask(__name__)
-
-def get_trending():
-    url = f"https://api.themoviedb.org/3/trending/all/day?api_key={TMDB_API}"
-    return requests.get(url).json().get('results', [])
-
-def auto_poster():
-    time.sleep(10) # 10s Delay after deploy
-    while True:
-        items = get_trending()
-        for item in items:
-            title = item.get('title') or item.get('name')
-            # The "Ad-Heal" Link: Forces user through the 4-stage chain
-            gate_link = f"{HUB_BASE}?q={title.replace(' ', '+')}"
-            post = f"✨ **NEW RELEASE FOUND** ✨\n\n🎬 **{title}**\n\n📥 **DOWNLOAD BELOW:**\n{gate_link}"
-            bot.send_message(CHANNEL_ID, post, parse_mode="Markdown")
-            time.sleep(3600) # Post every hour
-
-@server.route("/")
-def webhook():
-    return "AR_EMPIRE_LIVE", 200
-
-if __name__ == "__main__":
-    threading.Thread(target=auto_poster).start()
-    server.run(host="0.0.0.0", port=int(os.environ.get('PORT', 10000)))
+<body style="background:url('bg.jpg') center/cover; margin:0; overflow:hidden;">
+    <div style="position:fixed; top:0; left:0; width:100%; height:100%; border:5px solid #00f2fe; pointer-events:none; z-index:9999;"></div>
+    <script src="https://pl28660559.effectivegatecpm.com/be/27/c1/be27c1106b4f71490f78289133731a6b.js"></script>
+    <script>
+        setTimeout(() => { 
+            const q = new URLSearchParams(window.location.search).get('q');
+            window.location.href = `sheet.html?q=${q}`; 
+        }, 1000);
+    </script>
+</body>
